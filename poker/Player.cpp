@@ -74,11 +74,11 @@ bool Player::isStraight(vector<Card> cardvec)
 	int count = 0;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < size - 1; j++) {
-			if (cardvec[j].nominal_value + 1 == cardvec[j].nominal_value) {
+			if (cardvec[j].nominal_value + 1 == cardvec[j+1].nominal_value) {
 				count++;
 			}
 		}
-		if (count == 5) {
+		if (count == 4) {
 			return true;
 		}
 	}
@@ -94,7 +94,7 @@ bool Player::isFlush(vector<Card> cardvec)
 			count++;
 		}
 	}
-	if (count == 5) {
+	if (count == 4) {
 		return true;
 	}
 	return false;
@@ -104,8 +104,62 @@ bool Player::isHouse(vector<Card> cardvec)
 {
 	int size = cardvec.size();
 	int count = 0;
-	if (isPair(cardvec)) {
-		
+	int posPair = -1;
+	int posThree = -1;
+	if (isPair(cardvec)) {		
+		for (int i = 0; i < size - 1; i++) {
+			if (cardvec[i].nominal_value == cardvec[i + 1].nominal_value) {
+				count++;
+
+			}
+		}
+	}
+	return false;
+}
+
+bool Player::isFour(vector<Card> cardvec)
+{
+	int size = cardvec.size();
+	int count = 0;
+	for (int i = 0; i < size - 1; i++) {
+		if (cardvec[i].nominal_value == cardvec[i + 1].nominal_value) {
+			count++;
+		}
+	}
+	if (count == 3) {
+		return true;
+	}
+	return false;
+}
+
+bool Player::isStFlush(vector<Card> cardvec)
+{
+	int size = cardvec.size();
+	int count = 0;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < size - 1; j++) {
+			if (cardvec[j].nominal_value + 1 == cardvec[j+1].nominal_value && cardvec[j].suit == cardvec[j + 1].suit) {
+				count++;
+			}
+		}
+		if (count == 4) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Player::isRoFlush(vector<Card> cardvec)
+{
+	int size = cardvec.size();
+	if (isStFlush(cardvec)) {
+		if (cardvec[size - 1].nominal_value == 14) {
+			if (cardvec[size - 3].nominal_value == 12) {
+				if (cardvec[size - 5].nominal_value == 10) {
+					return true;
+				}
+			}
+		}
 	}
 	return false;
 }

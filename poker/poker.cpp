@@ -12,11 +12,12 @@ int main()
     deck.mix();
     deck.print();
     cout << endl;
+    int countCard = 51;
     Player player;
-    player.distribution(deck.getCard(51), deck.getCard(50));
+    player.distribution(deck.getCard(countCard--), deck.getCard(countCard--));
     player.print();
     cout << endl;
     Player player2;
-    player2.distribution(deck.getCard(49), deck.getCard(48));
+    player2.distribution(deck.getCard(countCard--), deck.getCard(countCard--));
     player2.print();
 }

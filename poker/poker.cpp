@@ -44,23 +44,24 @@ bool isPair(vector<Card> cardvec)
 {
     int size = cardvec.size();    
     bool flag = false;
+    int pos;
     Card* cards = new Card[size];    
     for (int i = 0; i < size; i++) {
         cards[i] = cardvec[i];
     }
     
-    bubleSort2(cards);
+    bubleSort(cards);
     //print(cards);
 
-    for (int i = 1; i < 3 ; i++) {
-        if (cards[i].suit == cards[i + 1].suit && cards[i].suit == cards[i-1].suit) {
+    for (int i = 0; i < size - 1 ; i++) {
+        if (cards[i].nominal_value == cards[i + 1].nominal_value) {
             int count = 0;
-            for (int j = i - 1; j < size; j++) {
-                if (cards[j].suit == cards[j + 1].suit) {
+            for (int j = i; j < size - 1; j++) {
+                if (cards[i].nominal_value == cards[i + 1].nominal_value) {
                     count++;
                 }
             }
-            if (count == 5) {
+            if (count == 4) {
                 flag = true;
             }
         }
@@ -101,13 +102,13 @@ int main()
     vector<Card> cards;
     Card card{ 3 , 10 };
     cards.push_back(card);
-    Card card2{ 4 , 2 };
+    Card card2{ 4 , 10 };
     cards.push_back(card2);
     Card card3{ 3 , 9 };
     cards.push_back(card3);
-    Card card4{ 4 , 3 };
+    Card card4{ 4 , 9 };
     cards.push_back(card4);
-    Card card5{ 3 , 6 };
+    Card card5{ 5 , 9 };
     cards.push_back(card5);
     Card card6{ 3 , 4 };
     cards.push_back(card6);

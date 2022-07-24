@@ -158,18 +158,30 @@ bool Player::isFlush(vector<Card> cardvec)
 bool Player::isHouse(vector<Card> cardvec)
 {
 	int size = cardvec.size();
-	int count = 0;
-	int posPair = -1;
-	int posThree = -1;
-	if (isPair(cardvec)) {		
-		for (int i = 0; i < size - 1; i++) {
-			if (cardvec[i].nominal_value == cardvec[i + 1].nominal_value) {
-				count++;
+	bool flag = false;
+	int pos;
+	Card* cards = new Card[size];
+	for (int i = 0; i < size; i++) {
+		cards[i] = cardvec[i];
+	}
 
+	bubleSort(cards, size);
+	//print(cards);
+
+	for (int i = 1; i < size - 1; i++) {
+		if (cards[i].nominal_value == cards[i + 1].nominal_value && cards[i].nominal_value == cards[i - 1].nominal_value) {
+			pos = i;
+			for (int j = 0; j < size - 1; j++) {
+				if (j != pos || j != pos - 1 || j != pos + 1) {
+					if (cards[j].nominal_value == cards[j + 1].nominal_value) {
+						flag = true;
+					}
+				}
 			}
 		}
 	}
-	return false;
+	delete[] cards;
+	return flag;
 }
 
 bool Player::isFour(vector<Card> cardvec)

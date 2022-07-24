@@ -16,6 +16,19 @@ void Player::bubleSort(Card* cards, int size)
 	}
 }
 
+void Player::bubleSort2(Card* cards, int size)
+{
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - 1; j++) {
+			if (cards[j].suit > cards[j + 1].suit) {
+				Card tmp = cards[j];
+				cards[j] = cards[j + 1];
+				cards[j + 1] = tmp;
+			}
+		}
+	}
+}
+
 bool Player::isPair(vector<Card> cardvec)
 {
 	int size = cardvec.size();
@@ -87,33 +100,59 @@ bool Player::isThree(vector<Card> cardvec)
 bool Player::isStraight(vector<Card> cardvec)
 {
 	int size = cardvec.size();
-	int count = 0;
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < size - 1; j++) {
-			if (cardvec[j].nominal_value + 1 == cardvec[j+1].nominal_value) {
-				count++;
+	bool flag = false;
+	Card* cards = new Card[size];
+	for (int i = 0; i < size; i++) {
+		cards[i] = cardvec[i];
+	}
+
+	bubleSort(cards, size);
+	//print(cards);
+
+	for (int i = 1; i < 3; i++) {
+		if (cards[i].nominal_value + 1 == cards[i + 1].nominal_value && cards[i].nominal_value == cards[i - 1].nominal_value + 1) {
+			int count = 0;
+			for (int j = i - 1; j < size; j++) {
+				if (cards[j].nominal_value + 1 == cards[j + 1].nominal_value) {
+					count++;
+				}
+			}
+			if (count == 5) {
+				flag = true;
 			}
 		}
-		if (count == 4) {
-			return true;
-		}
 	}
-	return false;
+	delete[] cards;
+	return flag;
 }
 
 bool Player::isFlush(vector<Card> cardvec)
 {
 	int size = cardvec.size();
-	int count = 0;
-	for (int i = 0; i < size - 1; i++) {
-		if (cardvec[i].suit == cardvec[i + 1].suit) {
-			count++;
+	bool flag = false;
+	Card* cards = new Card[size];
+	for (int i = 0; i < size; i++) {
+		cards[i] = cardvec[i];
+	}
+
+	bubleSort2(cards, size);
+	//print(cards);
+
+	for (int i = 1; i < 3; i++) {
+		if (cards[i].suit == cards[i + 1].suit && cards[i].suit == cards[i - 1].suit) {
+			int count = 0;
+			for (int j = i - 1; j < size; j++) {
+				if (cards[j].suit == cards[j + 1].suit) {
+					count++;
+				}
+			}
+			if (count == 5) {
+				flag = true;
+			}
 		}
 	}
-	if (count == 4) {
-		return true;
-	}
-	return false;
+	delete[] cards;
+	return flag;
 }
 
 bool Player::isHouse(vector<Card> cardvec)

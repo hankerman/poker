@@ -17,6 +17,7 @@ private:
 	int coint;
 	Res res;
 	void bubleSort(Card* cards, int size);
+	void bubleSort2(Card* cards, int size);
 	bool isPair(vector<Card> cardvec); //пара
 	bool isTwoPairs(vector<Card> cardvec); //две пары
 	bool isThree(vector<Card> cardvec); //сет или тройка

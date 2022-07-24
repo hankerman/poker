@@ -1,14 +1,16 @@
 #include "Player.h"
 
-void Player::bubleSort(vector<Card> cardvec)
+
+
+void Player::bubleSort(Card* cards, int size)
 {
-	int size = cardvec.size();
-	for (int i = 0; i < size-1; i++) {
+	
+	for (int i = 0; i < size - 1; i++) {
 		for (int j = 0; j < size - 1; j++) {
-			if (cardvec[j].nominal_value > cardvec[j + 1].nominal_value) {
-				Card tmp = cardvec[j];
-				cardvec[j] = cardvec[j + 1];
-				cardvec[j + 1] = tmp;
+			if (cards[j].nominal_value > cards[j + 1].nominal_value) {
+				Card tmp = cards[j];
+				cards[j] = cards[j + 1];
+				cards[j + 1] = tmp;
 			}
 		}
 	}
@@ -17,55 +19,69 @@ void Player::bubleSort(vector<Card> cardvec)
 bool Player::isPair(vector<Card> cardvec)
 {
 	int size = cardvec.size();
-	int count = 0;
-	for (int i = 0; i < size-1; i++) {
-		if (cardvec[i].nominal_value == cardvec[i + 1].nominal_value) {
-			count++;
+	bool flag = false;
+	Card* cards = new Card[size];
+	for (int i = 0; i < size; i++) {
+		cards[i] = cardvec[i];
+	}
+
+	bubleSort(cards, size);
+	//print(cards);
+
+	for (int i = size - 2; i != -1; i--) {
+		if (cards[i].nominal_value == cards[i + 1].nominal_value) {
+			flag = true;
 		}
 	}
-	if (count == 1) {
-		return true;
-	}
-	return false;
+
+	delete[] cards;
+
+	return flag;
 }
 
 bool Player::isTwoPairs(vector<Card> cardvec)
 {
 	int size = cardvec.size();
-	int count = 0;
-	for (int i = 0; i < size - 1; i++) {
-		if (cardvec[i].nominal_value == cardvec[i + 1].nominal_value) {
-			count++;
+	bool flag = false;
+	Card* cards = new Card[size];
+	for (int i = 0; i < size; i++) {
+		cards[i] = cardvec[i];
+	}
+
+	bubleSort(cards, size);
+	
+
+	for (int i = size - 2; i != -1; i--) {
+		if (cards[i].nominal_value == cards[i + 1].nominal_value) {
+			for (int j = i - 1; j != -1; j--) {
+				if (cards[j].nominal_value == cards[j + 1].nominal_value) {
+					flag = true;
+				}
+			}
 		}
 	}
-	int size = cardvec.size();
-	int count = 0;
-	for (int i = size-2; i == 0; i--) {
-		if (cardvec[i].nominal_value == cardvec[i + 1].nominal_value) {
-			count++;
-		}
-	}
-	if (count == 2) {
-		return true;
-	}
-	return false;
+	delete[] cards;
+	return flag;
 }
 
 bool Player::isThree(vector<Card> cardvec)
 {
 	int size = cardvec.size();
-	int count = 0;
-	for (int i = 0; i < size-1; i++) {
-		for (int j = i+1; j < size - 1; j++) {
-			if (cardvec[i].nominal_value == cardvec[j].nominal_value) {
-				count++;
-			}
+	bool flag = false;
+	Card* cards = new Card[size];
+	for (int i = 0; i < size; i++) {
+		cards[i] = cardvec[i];
+	}
+
+	bubleSort(cards, size);
+	
+	for (int i = size - 2; i != 0; i--) {
+		if (cards[i].nominal_value == cards[i + 1].nominal_value && cards[i].nominal_value == cards[i - 1].nominal_value) {
+			flag = true;
 		}
 	}
-	if (count == 2) {
-		return true;
-	}
-	return false;
+	delete[] cards;
+	return flag;
 }
 
 bool Player::isStraight(vector<Card> cardvec)
@@ -248,7 +264,7 @@ void Player::compare(vector<Card> cardvec)
 	}
 	cardvec.push_back(card[0]);
 	cardvec.push_back(card[1]);
-	bubleSort(cardvec);
+	//bubleSort(cardvec);
 	int size = cardvec.size()-1;
 	int start = 0;
 	

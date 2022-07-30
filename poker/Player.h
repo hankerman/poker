@@ -1,6 +1,7 @@
 #pragma once
 #include "Deck_of_cards.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 struct Res {
@@ -13,6 +14,7 @@ enum combin{High_hand = 0, One_pair, Two_pairs, Three_of_a_kind, Straight, Flush
 class Player
 {
 private:
+	string Name;
 	Card* card;
 	int coint;
 	Res res;
@@ -29,6 +31,7 @@ private:
 	bool isRoFlush(vector<Card> cardvec); //נמÿכפכור
 public:
 	Player();
+	Player(string name);
 	~Player();
 	void distribution(Card card1, Card card2);
 	void print();
@@ -36,5 +39,9 @@ public:
 	int addCoin(int i);
 	int rates(int i);
 	void compare(vector<Card> cardvec);
+	int getRes(); // ןנטמנועוע
+	int getCard(); // םמלטםאכ ךאנעû
+	void setName(string name);
+	string getName();
 };
 

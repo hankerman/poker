@@ -10,18 +10,24 @@ private:
 	
 	Deck_of_cards deck;
 	vector<Card> table;
-	vector<Player> players;
+	//vector<Player> players;
+	Player* players;
+	int countPlayer;
 	int bank;
 	int countCard;
-	
+	int play;
+	void shou(Card card);
+
 public:
-	Dealer();	
+	Dealer();
+	~Dealer();
 	void print(int i);
 	void distribution(); //раздача
-	Card mapComparison(); //сравнение карт
+	int mapComparison(); //сравнение карт
 	void acceptingBets(int i); //прием ставок
-	void distributionDealer(); //получение карт дилером
-	void addPlayer(Player p);
+	void addPlayer(Player& p);//добавление игроков
+	//void addPlayer(vector<Player> play);//добавление игроков
+	Player getPlayer(int i);
 
 };
 
